@@ -1,6 +1,22 @@
 const mediaRoot = "assets/";
 const slides = [
-  { name: "Traub machining", heading: "Traub machining", image: "work 1.1.jpeg", video: "work 1.2.web.mp4", description: "A close-up look at the supplied Traub machining footage and finished components." },
+  {
+    name: "Traub machining",
+    heading: "Traub machining",
+    image: "work 1.1.jpeg",
+    video: "work 1.2.web.mp4",
+    serviceDetails: {
+      introduction: "G.T. Enterprises is a precision machining company specializing in high-quality component manufacturing using TRAUB automatic machines. We undertake machining jobs from 1 mm to 35 mm diameter, focusing on precision, quality, and timely delivery. We meet customer requirements with reliable machining solutions, consistent quality, and competitive pricing.",
+      listTitle: "Our Specialization",
+      points: [
+        "Precision machining on TRAUB machines",
+        "Job work from 1 mm to 35 mm diameter",
+        "Manufacturing of precision-turned components",
+        "Consistent quality and dimensional accuracy",
+        "Timely delivery and customer satisfaction"
+      ]
+    }
+  },
   {
     name: "Grinding work",
     heading: "Precision Centerless Grinding",
@@ -108,9 +124,11 @@ function renderGalleryDescription(slide) {
   });
   galleryDescription.append(list);
 
-  const closing = document.createElement("p");
-  closing.textContent = details.closing;
-  galleryDescription.append(closing);
+  if (details.closing) {
+    const closing = document.createElement("p");
+    closing.textContent = details.closing;
+    galleryDescription.append(closing);
+  }
 }
 function reportVideoError() {
   if (activeMedia !== "video") return;
@@ -161,6 +179,7 @@ document.querySelectorAll(".work-tab").forEach((tab) => tab.addEventListener("cl
 document.querySelector("#gallery-prev").addEventListener("click", () => showSlide(activeSlide - 1));
 document.querySelector("#gallery-next").addEventListener("click", () => showSlide(activeSlide + 1));
 document.querySelectorAll(".media-choice").forEach((button) => button.addEventListener("click", () => selectMedia(button.dataset.media)));
+showSlide(0);
 galleryVideo.addEventListener("error", reportVideoError);
 document.querySelector("#video-toggle").addEventListener("click", async () => {
   if (activeMedia !== "video") selectMedia("video");
